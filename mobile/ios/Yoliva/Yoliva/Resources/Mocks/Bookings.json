@@ -1,0 +1,52 @@
+[
+  {
+    "id": "11111111-2222-3333-4444-555555555555",
+    "fromCity": "İstanbul",
+    "toCity": "Ankara",
+    "date": "2026-02-25T08:00:00Z",
+    "driverName": "Ayşe Kaya",
+    "price": 450.0,
+    "pnr": "YLV-8A3F2K",
+    "status": "upcoming"
+  },
+  {
+    "id": "22222222-3333-4444-5555-666666666666",
+    "fromCity": "Ankara",
+    "toCity": "İzmir",
+    "date": "2026-02-15T06:00:00Z",
+    "driverName": "Can Öztürk",
+    "price": 550.0,
+    "pnr": "YLV-7B4G1M",
+    "status": "past"
+  },
+  {
+    "id": "33333333-4444-5555-6666-777777777777",
+    "fromCity": "Bursa",
+    "toCity": "İstanbul",
+    "date": "2026-02-12T16:00:00Z",
+    "driverName": "Merve Gök",
+    "price": 500.0,
+    "pnr": "YLV-9Z2X5Y",
+    "status": "past"
+  },
+  {
+    "id": "44444444-5555-6666-7777-888888888888",
+    "fromCity": "İstanbul",
+    "toCity": "Antalya",
+    "date": "2026-01-20T09:00:00Z",
+    "driverName": "Hakan Bal",
+    "price": 750.0,
+    "pnr": "YLV-1A2B3C",
+    "status": "past"
+  },
+  {
+    "id": "55555555-6666-7777-8888-999999999999",
+    "fromCity": "Eskişehir",
+    "toCity": "Ankara",
+    "date": "2026-01-15T11:30:00Z",
+    "driverName": "Elif Çelik",
+    "price": 150.0,
+    "pnr": "YLV-4D5E6F",
+    "status": "past"
+  }
+]

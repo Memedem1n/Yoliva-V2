@@ -1,7 +1,7 @@
 // mobile/ios/Yoliva/Features/Profile/ProfileViewModel.swift
 import SwiftUI
 
-enum VerificationStatus: String {
+enum VerificationStatus: String, Decodable {
     case approved = "Onaylandı"
     case missing = "Eksik"
     case pending = "İnceleniyor"
@@ -23,6 +23,16 @@ enum VerificationStatus: String {
     }
 }
 
+struct UserProfile: Decodable {
+    let id: UUID
+    let fullName: String
+    let rating: Double
+    let totalRides: Int
+    let isIDVerified: Bool
+    let isCriminalRecordVerified: Bool
+    let memberSince: Date
+}
+
 @MainActor
 final class ProfileViewModel: ObservableObject {
     // User Stats
@@ -40,6 +50,25 @@ final class ProfileViewModel: ObservableObject {
     @Published var isTakingPhoto: Bool = false
     @Published var isFaceIDAuthenticating: Bool = false
     @Published var selectedDocType: String? = nil
+    
+    init() {
+        loadUserProfile()
+    }
+    
+    func loadUserProfile() {
+        do {
+            let users: [UserProfile] = try MockDataLoader.shared.load("Users")
+            if let firstUser = users.first {
+                self.fullName = firstUser.fullName
+                self.totalRides = firstUser.totalRides
+                self.rating = firstUser.rating
+                self.idStatus = firstUser.isIDVerified ? .approved : .missing
+                self.criminalRecordStatus = firstUser.isCriminalRecordVerified ? .approved : .missing
+            }
+        } catch {
+            print("Mock User Error: \(error)")
+        }
+    }
     
     func startVerification(for type: String) {
         selectedDocType = type

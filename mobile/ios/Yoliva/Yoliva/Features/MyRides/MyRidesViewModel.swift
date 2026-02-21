@@ -2,7 +2,7 @@
 import SwiftUI
 
 /// Simple model for a ride in the "My Rides" list.
-struct UserRide: Identifiable {
+struct UserRide: Identifiable, Decodable {
     let id: UUID
     let fromCity: String
     let toCity: String
@@ -13,7 +13,7 @@ struct UserRide: Identifiable {
     let status: RideStatus
 }
 
-enum RideStatus {
+enum RideStatus: String, Decodable {
     case upcoming, past
 }
 
@@ -37,15 +37,16 @@ final class MyRidesViewModel: ObservableObject {
     func fetchRides() {
         isLoading = true
         
-        // Mocking Data
-        self.upcomingRides = [
-            UserRide(id: UUID(), fromCity: "İstanbul", toCity: "Ankara", date: Date().addingTimeInterval(86400), driverName: "Zeynep Y.", price: 350.0, pnr: "YLV-9281", status: .upcoming),
-            UserRide(id: UUID(), fromCity: "Bursa", toCity: "İzmir", date: Date().addingTimeInterval(172800), driverName: "Caner T.", price: 280.0, pnr: "YLV-1024", status: .upcoming)
-        ]
-        
-        self.pastRides = [
-            UserRide(id: UUID(), fromCity: "Ankara", toCity: "İstanbul", date: Date().addingTimeInterval(-86400 * 5), driverName: "Merve G.", price: 320.0, pnr: "YLV-0042", status: .past)
-        ]
+        // Load data from mock JSON
+        do {
+            let allBookings: [UserRide] = try MockDataLoader.shared.load("Bookings")
+            self.upcomingRides = allBookings.filter { $0.status == .upcoming }
+            self.pastRides = allBookings.filter { $0.status == .past }
+        } catch {
+            print("Mock Bookings Error: \(error)")
+            self.upcomingRides = []
+            self.pastRides = []
+        }
         
         isLoading = false
     }

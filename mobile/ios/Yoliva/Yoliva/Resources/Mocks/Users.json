@@ -1,0 +1,47 @@
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "fullName": "Emre Yılmaz",
+    "rating": 4.8,
+    "totalRides": 47,
+    "isIDVerified": true,
+    "isCriminalRecordVerified": true,
+    "memberSince": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440001",
+    "fullName": "Ayşe Kaya",
+    "rating": 4.9,
+    "totalRides": 124,
+    "isIDVerified": true,
+    "isCriminalRecordVerified": true,
+    "memberSince": "2023-05-20T10:00:00Z"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440002",
+    "fullName": "Mehmet Demir",
+    "rating": 4.7,
+    "totalRides": 89,
+    "isIDVerified": true,
+    "isCriminalRecordVerified": false,
+    "memberSince": "2024-02-10T10:00:00Z"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440003",
+    "fullName": "Can Öztürk",
+    "rating": 4.6,
+    "totalRides": 32,
+    "isIDVerified": false,
+    "isCriminalRecordVerified": false,
+    "memberSince": "2024-06-01T10:00:00Z"
+  },
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440004",
+    "fullName": "Elif Çelik",
+    "rating": 5.0,
+    "totalRides": 15,
+    "isIDVerified": true,
+    "isCriminalRecordVerified": true,
+    "memberSince": "2025-01-05T10:00:00Z"
+  }
+]

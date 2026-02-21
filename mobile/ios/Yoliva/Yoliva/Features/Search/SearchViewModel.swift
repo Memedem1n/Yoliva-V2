@@ -47,11 +47,19 @@ final class SearchViewModel: ObservableObject {
         // Mock API Call Simulation
         try? await Task.sleep(nanoseconds: 1_200_000_000)
         
-        // Mock Search Results
-        self.results = [
-            TripResult(id: UUID(), driverName: "Zeynep Y.", departureTime: Date().addingTimeInterval(3600), fromCity: departureCity, toCity: arrivalCity, price: 350.0, isLadiesOnly: true, rating: 4.9, carModel: "Tesla Model 3"),
-            TripResult(id: UUID(), driverName: "Ahmet K.", departureTime: Date().addingTimeInterval(7200), fromCity: departureCity, toCity: arrivalCity, price: 320.0, isLadiesOnly: false, rating: 4.7, carModel: "VW Golf")
-        ]
+        // Load data from mock JSON
+        do {
+            let allTrips: [TripResult] = try MockDataLoader.shared.load("Trips")
+            // Filter based on criteria if needed
+            self.results = allTrips.filter { trip in
+                let cityMatch = trip.fromCity.lowercased().contains(departureCity.lowercased()) || departureCity.isEmpty
+                let ladiesMatch = isLadiesOnly ? trip.isLadiesOnly : true
+                return cityMatch && ladiesMatch
+            }
+        } catch {
+            print("Mock Data Error: \(error)")
+            self.results = []
+        }
         
         isLoading = false
     }
