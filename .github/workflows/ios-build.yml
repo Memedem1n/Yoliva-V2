@@ -19,9 +19,10 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Convert Logo to PNG
+      - name: Convert Assets to PNG
         run: |
-          # Convert original Logo.jpg to PNG for AppIcon and ImageSet
+          # Use sips to convert the high-res JPG to PNG for Xcode's asset compiler
+          # This ensures we have actual PNG files before project generation
           sips -s format png ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/AppIcon.appiconset/Logo.jpg --out ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/AppIcon.appiconset/AppIcon.png
           sips -s format png ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/Logo.imageset/Logo.jpg --out ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/Logo.imageset/Logo.png
 
