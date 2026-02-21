@@ -9,23 +9,24 @@ struct SplashView: View {
     
     var body: some View {
         ZStack {
-            // Background Mesh Gradient (Teal-to-Black)
+            // Background Mesh Gradient (Primary Blue to Deep Navy)
             RadialGradient(
-                colors: [AppTheme.electricTeal.opacity(0.3), AppTheme.pureBlack],
+                colors: [AppTheme.primary.opacity(0.4), AppTheme.secondary],
                 center: .topTrailing,
                 startRadius: 100,
-                endRadius: 700
+                endRadius: 800
             )
             .ignoresSafeArea()
             
             VStack(spacing: 12) {
                 // Animated Logo
-                Image(systemName: "car.2.fill")
-                    .font(.system(size: 80))
-                    .foregroundColor(AppTheme.electricTeal)
+                Image("Logo") // Custom Asset with integrated colors
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 150, height: 150)
                     .scaleEffect(startAnimation ? 1.0 : 0.6)
                     .opacity(startAnimation ? 1.0 : 0.0)
-                    .shadow(color: AppTheme.electricTeal.opacity(0.6), radius: 20)
+                    .shadow(color: AppTheme.primary.opacity(0.6), radius: 20)
                 
                 // Animated App Name
                 Text("Yoliva")
