@@ -1,8 +1,8 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
       "filename" : "Logo.png",
+      "idiom" : "universal",
       "scale" : "1x"
     },
     {

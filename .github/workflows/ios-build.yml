@@ -21,9 +21,9 @@ jobs:
 
       - name: Convert Logo to PNG
         run: |
+          # Convert original Logo.jpg to PNG for AppIcon and ImageSet
           sips -s format png ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/AppIcon.appiconset/Logo.jpg --out ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/AppIcon.appiconset/AppIcon.png
           sips -s format png ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/Logo.imageset/Logo.jpg --out ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/Logo.imageset/Logo.png
-          ls -R ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/AppIcon.appiconset
 
       - name: Install XcodeGen
         run: brew install xcodegen
