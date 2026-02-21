@@ -1,103 +1,95 @@
 // mobile/ios/Yoliva/Yoliva/Features/Search/Components/TripCardView.swift
 import SwiftUI
 
-/// Redesigned Responsive Trip Card with Depth and Symbol Effects.
+/// Redesigned Trip Card matching Image #2.
 struct TripCardView: View {
     let trip: TripResult
     let action: () -> Void
     
     var body: some View {
-        Button(action: {
-            AppTheme.haptic(.light)
-            action()
-        }) {
-            VStack(alignment: .leading, spacing: 16) {
-                // 1. Time & Price: High contrast
-                HStack(alignment: .firstTextBaseline) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack(spacing: 8) {
-                            Text(trip.departureTime, style: .time)
-                                .font(AppTheme.Typography.numeric(22))
-                                .foregroundColor(.white)
-                            
-                            Image(systemName: "chevron.right")
-                                .font(.caption2.bold())
-                                .foregroundColor(AppTheme.accent.opacity(0.5))
-                            
-                            Text(trip.departureTime.addingTimeInterval(14400), style: .time)
-                                .font(AppTheme.Typography.numeric(22))
-                                .foregroundColor(.white.opacity(0.6))
-                        }
-                        
-                        Text("\(trip.fromCity) ➔ \(trip.toCity)")
-                            .font(.caption.bold())
-                            .foregroundColor(AppTheme.accent)
-                    }
-                    
-                    Spacer()
-                    
-                    Text("₺\(Int(trip.price))")
-                        .font(AppTheme.Typography.numeric(26))
-                        .foregroundColor(AppTheme.accent)
-                        .shadow(color: AppTheme.accent.opacity(0.3), radius: 8)
-                }
-                
-                Divider().background(Color.white.opacity(0.1))
-                
-                // 2. Driver & Badges: Modern layout
-                HStack {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 20) {
+                // Header: Driver and Price
+                HStack(alignment: .top) {
                     HStack(spacing: 12) {
-                        // Avatar with depth
-                        ZStack {
-                            Circle()
-                                .fill(AppTheme.surface)
-                                .frame(width: 40, height: 40)
-                            
-                            Text(String(trip.driverName.prefix(1)))
-                                .font(.subheadline.bold())
-                                .foregroundColor(.white)
-                        }
-                        .overlay(Circle().stroke(Color.white.opacity(0.1), lineWidth: 1))
+                        Circle()
+                            .fill(Color.white.opacity(0.1))
+                            .frame(width: 40, height: 40)
+                            .overlay(Text(String(trip.driverName.prefix(1))).font(.subheadline.bold()))
                         
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(trip.driverName)
-                                .font(.subheadline.bold())
-                                .foregroundColor(.white)
-                            
                             HStack(spacing: 4) {
-                                Image(systemName: "star.fill")
-                                    .font(.system(size: 10))
-                                    .foregroundColor(.yellow)
-                                Text(String(format: "%.1f", trip.rating))
-                                    .font(.system(size: 10, weight: .bold))
-                                    .foregroundColor(.gray)
+                                Text(trip.driverName).font(.subheadline.bold()).foregroundColor(.white)
+                                Image(systemName: "checkmark.seal.fill").foregroundColor(AppTheme.primary).font(.caption2)
+                            }
+                            HStack(spacing: 4) {
+                                Image(systemName: "star.fill").foregroundColor(.yellow).font(.caption2)
+                                Text(String(format: "%.1f", trip.rating)).font(.caption2.bold()).foregroundColor(.gray)
+                                Text("• \(Int.random(in: 50...150)) yolculuk").font(.system(size: 10)).foregroundColor(.gray.opacity(0.6))
                             }
                         }
                     }
                     
                     Spacer()
                     
-                    // Animated Symbol Badges (iOS 17+)
-                    HStack(spacing: 10) {
-                        if trip.isLadiesOnly {
-                            Image(systemName: "figure.and.child.holdinghands")
-                                .symbolEffect(.bounce, options: .repeat(2))
-                                .foregroundColor(AppTheme.yolivaPink)
-                                .padding(8)
-                                .background(AppTheme.yolivaPink.opacity(0.1))
-                                .clipShape(Circle())
+                    HStack(alignment: .firstTextBaseline, spacing: 2) {
+                        Text("\(Int(trip.price))").font(AppTheme.Typography.numeric(24)).foregroundColor(.white)
+                        Text("₺").font(.caption).foregroundColor(.gray)
+                    }
+                }
+                
+                // Content: Vertical Timeline
+                HStack(spacing: 16) {
+                    VStack(spacing: 0) {
+                        Circle().fill(AppTheme.primary).frame(width: 8, height: 8)
+                        Rectangle().fill(Color.white.opacity(0.1)).frame(width: 1, height: 35)
+                        Circle().fill(AppTheme.accentPink).frame(width: 8, height: 8)
+                    }
+                    .padding(.leading, 4)
+                    
+                    VStack(alignment: .leading, spacing: 24) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            HStack(spacing: 12) {
+                                Text("08:00").font(AppTheme.Typography.numeric(16)).foregroundColor(.white)
+                                Text(trip.fromCity).font(.headline).foregroundColor(.white)
+                            }
+                            Text("Kadıköy").font(.caption).foregroundColor(.gray).padding(.leading, 52)
                         }
                         
-                        Image(systemName: "shield.checkered")
-                            .foregroundColor(AppTheme.primary)
-                            .padding(8)
-                            .background(AppTheme.primary.opacity(0.1))
-                            .clipShape(Circle())
+                        VStack(alignment: .leading, spacing: 2) {
+                            HStack(spacing: 12) {
+                                Text("12:30").font(AppTheme.Typography.numeric(16)).foregroundColor(.white)
+                                Text(trip.toCity).font(.headline).foregroundColor(.white)
+                            }
+                            Text("Kızılay").font(.caption).foregroundColor(.gray).padding(.leading, 52)
+                        }
+                    }
+                }
+                
+                Divider().background(Color.white.opacity(0.05))
+                
+                // Footer: Labels
+                HStack {
+                    if trip.isLadiesOnly {
+                        Text("Kadınlara Özel")
+                            .font(.system(size: 10, weight: .bold))
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 6)
+                            .background(AppTheme.accentPink.opacity(0.1))
+                            .foregroundColor(AppTheme.accentPink)
+                            .cornerRadius(8)
+                    }
+                    
+                    Spacer()
+                    
+                    HStack(spacing: 4) {
+                        Image(systemName: "person.2.fill").font(.caption).foregroundColor(.gray)
+                        Text("2 koltuk").font(.caption).foregroundColor(.gray)
                     }
                 }
             }
             .padding(20)
-            .glassCard(cornerRadius: 28, addGlow: trip.isLadiesOnly)
+            .yolivaCard(cornerRadius: 24)
         }
         .buttonStyle(PlainButtonStyle())
     }
