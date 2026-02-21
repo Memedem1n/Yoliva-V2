@@ -1,7 +1,7 @@
 // mobile/ios/Yoliva/Yoliva/Features/Main/MainContainerView.swift
 import SwiftUI
 
-/// The primary shell of the application after login, managing tab navigation and content.
+/// The primary shell of the application, managing tab navigation and content visibility.
 struct MainContainerView: View {
     @EnvironmentObject var session: SessionManager
     @EnvironmentObject var router: AppRouter
@@ -10,7 +10,11 @@ struct MainContainerView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             ZStack(alignment: .bottom) {
-                // Content Layer
+                // 1. Living Background (Consistent throughout the shell)
+                MeshBackgroundView()
+                    .ignoresSafeArea()
+                
+                // 2. Content Layer
                 Group {
                     switch selectedTab {
                     case .search:
@@ -32,10 +36,15 @@ struct MainContainerView: View {
                     destinationView(for: route)
                 }
                 
-                // Premium Tab Bar (Floating)
+                // 3. Premium Tab Bar (Floating with Ripple & Burst)
                 PremiumTabView(selection: $selectedTab)
             }
-            .edgesIgnoringSafeArea(.bottom)
+            // Ensure content doesn't hide behind the tab bar
+            .safeAreaInset(edge: .bottom) {
+                Color.clear.frame(height: 80) 
+            }
+            .background(AppTheme.background) // Fixes any gray background bleeding
+            .ignoresSafeArea(.keyboard) // Responsive keyboard handling
         }
     }
     

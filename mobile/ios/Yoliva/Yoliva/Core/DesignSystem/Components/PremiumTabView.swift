@@ -1,7 +1,7 @@
 // mobile/ios/Yoliva/Yoliva/Core/DesignSystem/Components/PremiumTabView.swift
 import SwiftUI
 
-/// A high-fidelity, floating glassmorphic Tab Bar matching the user's reference image.
+/// Ultra-Premium, Glassmorphic Tab Bar with Ripple and Burst effects.
 struct PremiumTabView: View {
     @Binding var selection: YolivaTab
     @Namespace private var animation
@@ -14,28 +14,30 @@ struct PremiumTabView: View {
                     isSelected: selection == tab,
                     animation: animation
                 ) {
-                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0)) {
+                    withAnimation(.interactiveSpring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.2)) {
                         selection = tab
-                        AppTheme.haptic(.light)
                     }
                 }
             }
         }
-        .padding(8)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
         .background(
             ZStack {
-                // Background of the whole bar
-                RoundedRectangle(cornerRadius: 40)
-                    .fill(Color(red: 0.05, green: 0.05, blue: 0.07)) // Very dark navy
+                // 1. Precise Glass Background matching screenshot
+                RoundedRectangle(cornerRadius: 35)
+                    .fill(Color(red: 0.08, green: 0.08, blue: 0.12).opacity(0.8))
                     .background(.ultraThinMaterial)
                 
-                // Subtle border
-                RoundedRectangle(cornerRadius: 40)
-                    .stroke(Color.white.opacity(0.08), lineWidth: 1)
+                // 2. Subtle Rim Light
+                RoundedRectangle(cornerRadius: 35)
+                    .stroke(Color.white.opacity(0.12), lineWidth: 0.5)
             }
         )
-        .padding(.horizontal, 20)
-        .padding(.bottom, 20)
+        // 3. Responsive Geometry: Wider and shorter as requested
+        .frame(height: 60) 
+        .padding(.horizontal, 12) // Increases overall width by reducing side padding
+        .padding(.bottom, 25) // Floating above bottom
     }
 }
 
@@ -45,68 +47,60 @@ struct TabItemButton: View {
     var animation: Namespace.ID
     let action: () -> Void
     
+    @State private var rippleScale: CGFloat = 0.0
+    @State private var rippleOpacity: Double = 0.0
+    
     var body: some View {
-        Button(action: action) {
-            VStack(spacing: 6) {
-                // Icon
-                if tab == .profile {
-                    // Profile uses an avatar style
+        Button(action: {
+            triggerEffects()
+            action()
+        }) {
+            VStack(spacing: 4) {
+                ZStack {
+                    // Water Drop / Ripple Effect
                     Circle()
-                        .fill(Color.white.opacity(0.1))
-                        .frame(width: 28, height: 28)
-                        .overlay(Image(systemName: "person.fill").font(.system(size: 14)))
-                        .overlay(Circle().stroke(isSelected ? AppTheme.primary : Color.clear, lineWidth: 1.5))
-                } else {
+                        .fill(AppTheme.primary.opacity(0.3))
+                        .frame(width: 40, height: 40)
+                        .scaleEffect(rippleScale)
+                        .opacity(rippleOpacity)
+                    
+                    // Icon with Burst/Spring
                     Image(systemName: tab.icon)
-                        .font(.system(size: 22, weight: isSelected ? .bold : .medium))
-                        .foregroundColor(isSelected ? AppTheme.primary : .white.opacity(0.8))
+                        .font(.system(size: 18, weight: isSelected ? .bold : .medium))
+                        .foregroundColor(isSelected ? AppTheme.primary : .white.opacity(0.6))
+                        .symbolEffect(.bounce, value: isSelected)
                 }
                 
-                // Label
                 Text(tab.label)
-                    .font(.system(size: 11, weight: isSelected ? .bold : .medium))
-                    .foregroundColor(isSelected ? AppTheme.primary : .white.opacity(0.8))
-                    .lineLimit(1)
+                    .font(.system(size: 10, weight: isSelected ? .bold : .medium))
+                    .foregroundColor(isSelected ? AppTheme.primary : .white.opacity(0.6))
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 70)
             .background(
                 ZStack {
                     if isSelected {
-                        // Sliding highlight pill
-                        RoundedRectangle(cornerRadius: 30)
+                        // Glassy Bubble Highlight (Matched Geometry)
+                        RoundedRectangle(cornerRadius: 25)
                             .fill(Color.white.opacity(0.08))
-                            .matchedGeometryEffect(id: "tab_highlight", in: animation)
-                            .padding(.horizontal, 4)
-                            .padding(.vertical, 4)
+                            .matchedGeometryEffect(id: "tab_bubble", in: animation)
+                            .shadow(color: AppTheme.primary.opacity(0.2), radius: 10)
                     }
                 }
             )
         }
         .buttonStyle(PlainButtonStyle())
     }
-}
-
-enum YolivaTab: Int, CaseIterable {
-    case search, publish, rides, inbox, profile
     
-    var icon: String {
-        switch self {
-        case .search: return "magnifyingglass"
-        case .publish: return "plus.circle"
-        case .rides: return "car.2"
-        case .inbox: return "bubble.left.and.bubble.right"
-        case .profile: return "person.crop.circle"
-        }
-    }
-    
-    var label: String {
-        switch self {
-        case .search: return "Ara"
-        case .publish: return "Yayınla"
-        case .rides: return "Yolculukların"
-        case .inbox: return "Gelen Kutusu"
-        case .profile: return "Profil"
+    private func triggerEffects() {
+        AppTheme.haptic(.medium)
+        
+        // Reset and fire ripple
+        rippleScale = 0.5
+        rippleOpacity = 0.6
+        
+        withAnimation(.easeOut(duration: 0.5)) {
+            rippleScale = 2.0
+            rippleOpacity = 0.0
         }
     }
 }
