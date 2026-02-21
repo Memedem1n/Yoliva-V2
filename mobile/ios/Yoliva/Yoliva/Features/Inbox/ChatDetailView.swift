@@ -66,7 +66,7 @@ struct ChatDetailView: View {
                     if viewModel.conversation.isVerified {
                         Image(systemName: "checkmark.seal.fill")
                             .font(.caption2)
-                            .foregroundColor(AppTheme.electricTeal)
+                            .foregroundColor(AppTheme.primary)
                     }
                 }
             }
@@ -89,7 +89,7 @@ struct ChatBubble: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
                     .background(
-                        message.isMe ? AppTheme.electricTeal : Color.white.opacity(0.08)
+                        message.isMe ? AppTheme.primary : Color.white.opacity(0.08)
                     )
                     .foregroundColor(message.isMe ? .black : .white)
                     .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
@@ -136,7 +136,7 @@ struct ChatInputBar: View {
                 Button(action: onSend) {
                     Image(systemName: "paperplane.fill")
                         .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(text.isEmpty ? .gray : AppTheme.electricTeal)
+                        .foregroundColor(text.isEmpty ? .gray : AppTheme.primary)
                         .frame(width: 44, height: 44)
                 }
                 .disabled(text.isEmpty)

@@ -48,12 +48,12 @@ struct RegisterView: View {
                             Text("Kullanım koşullarını")
                                 .foregroundColor(AppTheme.textSecondary)
                             Text("Kabul Ediyorum")
-                                .foregroundColor(AppTheme.electricTeal)
+                                .foregroundColor(AppTheme.primary)
                                 .bold()
                         }
                         .font(.caption)
                     }
-                    .tint(AppTheme.electricTeal)
+                    .tint(AppTheme.primary)
                     .padding(.horizontal, 10)
                 }
                 .padding(.horizontal, 24)

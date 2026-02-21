@@ -12,7 +12,7 @@ struct TripDetailView: View {
     }
     
     private var accentColor: Color {
-        viewModel.trip?.isLadiesOnly == true ? AppTheme.yolivaPink : AppTheme.electricTeal
+        viewModel.trip?.isLadiesOnly == true ? AppTheme.accentPink : AppTheme.primary
     }
     
     var body: some View {
@@ -78,7 +78,7 @@ struct MapHeader: View {
         ZStack(alignment: .bottomLeading) {
             // Dark Gradient / Mock Graphic
             LinearGradient(
-                colors: [accentColor.opacity(0.15), AppTheme.pureBlack],
+                colors: [accentColor.opacity(0.15), AppTheme.background],
                 startPoint: .topTrailing,
                 endPoint: .bottomLeading
             )
@@ -249,7 +249,7 @@ struct StickyBookingFooter: View {
                 YolivaPrimaryButton(
                     title: "Rezervasyon Yap",
                     isLoading: false,
-                    isPink: accentColor == AppTheme.yolivaPink,
+                    isPink: accentColor == AppTheme.accentPink,
                     action: action
                 )
                 .frame(width: 200)

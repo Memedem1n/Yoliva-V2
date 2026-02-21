@@ -90,9 +90,9 @@ struct StepIndicator: View {
         HStack(spacing: 12) {
             ForEach(1...4, id: \.self) { step in
                 Circle()
-                    .fill(step <= currentStep ? AppTheme.electricTeal : .white.opacity(0.1))
+                    .fill(step <= currentStep ? AppTheme.primary : .white.opacity(0.1))
                     .frame(width: 10, height: 10)
-                    .shadow(color: step == currentStep ? AppTheme.electricTeal.opacity(0.6) : .clear, radius: 4)
+                    .shadow(color: step == currentStep ? AppTheme.primary.opacity(0.6) : .clear, radius: 4)
                     .scaleEffect(step == currentStep ? 1.2 : 1.0)
             }
         }
@@ -125,9 +125,9 @@ struct StepTwoDateCapacity: View {
             
             HStack {
                 Image(systemName: "calendar")
-                    .foregroundColor(AppTheme.electricTeal)
+                    .foregroundColor(AppTheme.primary)
                 DatePicker("Yolculuk Tarihi", selection: $draft.date, in: Date()..., displayedComponents: [.date, .hourAndMinute])
-                    .tint(AppTheme.electricTeal)
+                    .tint(AppTheme.primary)
             }
             .padding()
             .glassCard(cornerRadius: 16)
@@ -159,7 +159,7 @@ struct StepThreeRules: View {
                 }
                 .font(.headline)
             }
-            .tint(AppTheme.yolivaPink)
+            .tint(AppTheme.accentPink)
             .padding()
             .glassCard(cornerRadius: 16)
             
@@ -170,7 +170,7 @@ struct StepThreeRules: View {
                 }
                 .font(.headline)
             }
-            .tint(AppTheme.electricTeal)
+            .tint(AppTheme.primary)
             .padding()
             .glassCard(cornerRadius: 16)
         }
@@ -195,8 +195,8 @@ struct StepFourPriceLock: View {
             VStack(spacing: 4) {
                 Text("₺\(Int(draft.selectedPrice))")
                     .font(.system(size: 60, weight: .black, design: .rounded))
-                    .foregroundColor(AppTheme.electricTeal)
-                    .shadow(color: AppTheme.electricTeal.opacity(0.8), radius: 20)
+                    .foregroundColor(AppTheme.primary)
+                    .shadow(color: AppTheme.primary.opacity(0.8), radius: 20)
                 Text("Yolcu Başına")
                     .font(.caption.bold())
                     .foregroundColor(.white.opacity(0.4))
@@ -206,7 +206,7 @@ struct StepFourPriceLock: View {
             // Price Lock Slider (Bounded)
             VStack(spacing: 12) {
                 Slider(value: $draft.selectedPrice, in: draft.minRecommendedPrice...draft.maxRecommendedPrice, step: 10)
-                    .tint(AppTheme.electricTeal)
+                    .tint(AppTheme.primary)
                 
                 HStack {
                     Text("₺\(Int(draft.minRecommendedPrice))").font(.caption.bold())
@@ -219,7 +219,7 @@ struct StepFourPriceLock: View {
             .glassCard(cornerRadius: 24)
             
             HStack(spacing: 10) {
-                Image(systemName: "lock.fill").foregroundColor(AppTheme.electricTeal)
+                Image(systemName: "lock.fill").foregroundColor(AppTheme.primary)
                 Text("Yoliva Fiyat Kilidi Aktif: Daha yüksek fiyat belirlenemez.")
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(.gray)
@@ -235,14 +235,14 @@ struct SuccessOverlay: View {
     
     var body: some View {
         ZStack {
-            AppTheme.pureBlack.ignoresSafeArea()
+            AppTheme.background.ignoresSafeArea()
             
             VStack(spacing: 30) {
                 // Animated Success Icon
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 100))
-                    .foregroundColor(AppTheme.electricTeal)
-                    .shadow(color: AppTheme.electricTeal.opacity(0.5), radius: 20)
+                    .foregroundColor(AppTheme.primary)
+                    .shadow(color: AppTheme.primary.opacity(0.5), radius: 20)
                 
                 VStack(spacing: 12) {
                     Text("Yolculuğun Yayınlandı!")

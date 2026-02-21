@@ -1,4 +1,4 @@
-// mobile/ios/Yoliva/Features/Search/SearchRouteView.swift
+// mobile/ios/Yoliva/Yoliva/Features/Search/SearchRouteView.swift
 import SwiftUI
 
 /// Detailed Search Form for Yoliva Trips.
@@ -16,36 +16,33 @@ struct SearchRouteView: View {
                         CustomGlassTextField(placeholder: "Nereye?", text: $viewModel.arrivalCity, icon: "location.fill")
                     }
                     
-                    // Swap Button (Positioned between text fields)
+                    // Swap Button
                     Button(action: {
                         viewModel.swapLocations()
                     }) {
                         Image(systemName: "arrow.up.arrow.down.circle.fill")
                             .font(.title)
-                            .foregroundColor(AppTheme.electricTeal)
-                            .background(Circle().fill(AppTheme.pureBlack))
+                            .foregroundColor(AppTheme.primary)
+                            .background(Circle().fill(AppTheme.background))
                             .padding(.trailing, 10)
                     }
                 }
                 
                 HStack(spacing: 15) {
-                    // Date Picker (Glassmorphic)
                     DatePickerButton(date: viewModel.searchDate)
-                    
-                    // Passenger Count (Glassmorphic)
                     PassengerStepper(count: $viewModel.passengerCount)
                 }
                 
-                // "Ladies Only" Toggle (Phase 5 Pink Mode)
+                // "Ladies Only" Toggle
                 Toggle(isOn: $viewModel.isLadiesOnly) {
                     HStack {
                         Image(systemName: "figure.and.child.holdinghands")
                         Text("Sadece Kadınlar")
                             .font(.subheadline.bold())
                     }
-                    .foregroundColor(viewModel.isLadiesOnly ? AppTheme.yolivaPink : .white)
+                    .foregroundColor(viewModel.isLadiesOnly ? AppTheme.accentPink : .white)
                 }
-                .tint(AppTheme.yolivaPink)
+                .tint(AppTheme.accentPink)
                 .padding(.horizontal, 10)
                 .onChange(of: viewModel.isLadiesOnly) { _ in
                     AppTheme.haptic(.soft)
@@ -58,13 +55,11 @@ struct SearchRouteView: View {
                     isPink: viewModel.isLadiesOnly,
                     action: {
                         Task { await viewModel.executeSearch() }
-                        // For this demo, we'll navigate to results locally
-                        router.navigate(to: .dashboard) // Using dashboard as a mock results view for now
                     }
                 )
             }
             .padding(20)
-            .glassCard(cornerRadius: 30)
+            .yolivaCard(cornerRadius: 30)
             .padding()
             
             Spacer()
@@ -83,17 +78,16 @@ struct DatePickerButton: View {
     var body: some View {
         HStack {
             Image(systemName: "calendar")
-                .foregroundColor(AppTheme.electricTeal)
+                .foregroundColor(AppTheme.primary)
             Text(date, style: .date)
                 .font(.caption.bold())
                 .foregroundColor(.white)
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .glassCard(cornerRadius: 15)
+        .yolivaCard(cornerRadius: 15)
         .onTapGesture {
             AppTheme.haptic(.light)
-            // Show real date picker sheet logic here
         }
     }
 }
@@ -104,23 +98,23 @@ struct PassengerStepper: View {
     var body: some View {
         HStack(spacing: 15) {
             Button("-") { if count > 1 { count -= 1; AppTheme.haptic(.light) } }
-                .foregroundColor(AppTheme.electricTeal)
+                .foregroundColor(AppTheme.primary)
                 .font(.title2.bold())
             
             HStack(spacing: 4) {
                 Image(systemName: "person.fill")
-                    .foregroundColor(AppTheme.electricTeal)
+                    .foregroundColor(AppTheme.primary)
                 Text("\(count)")
                     .font(AppTheme.Typography.numeric(18))
                     .foregroundColor(.white)
             }
             
             Button("+") { if count < 4 { count += 1; AppTheme.haptic(.light) } }
-                .foregroundColor(AppTheme.electricTeal)
+                .foregroundColor(AppTheme.primary)
                 .font(.title2.bold())
         }
         .padding(.horizontal, 15)
         .padding(.vertical, 10)
-        .glassCard(cornerRadius: 15)
+        .yolivaCard(cornerRadius: 15)
     }
 }

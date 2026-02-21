@@ -22,12 +22,12 @@ struct FaceIDAuthModifier: ViewModifier {
                 VStack(spacing: 30) {
                     Image(systemName: isSuccess ? "faceid" : "faceid")
                         .font(.system(size: 80))
-                        .foregroundColor(isSuccess ? AppTheme.electricTeal : .white)
+                        .foregroundColor(isSuccess ? AppTheme.primary : .white)
                         .scaleEffect(showIcon ? 1.0 : 0.5)
                         .opacity(showIcon ? 1.0 : 0.0)
                         .overlay(
                             Circle()
-                                .stroke(AppTheme.electricTeal.opacity(isScanning ? 0.6 : 0), lineWidth: 4)
+                                .stroke(AppTheme.primary.opacity(isScanning ? 0.6 : 0), lineWidth: 4)
                                 .scaleEffect(isScanning ? 1.5 : 1.0)
                                 .opacity(isScanning ? 0 : 1)
                         )

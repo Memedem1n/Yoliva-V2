@@ -70,7 +70,7 @@ struct TicketCardView: View {
             DashedLine()
                 .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
                 .frame(height: 1)
-                .foregroundColor(.white.opacity(0.1))
+                .foregroundColor(Color.white.opacity(0.1))
             
             // Footer: Driver and QR
             HStack {
@@ -122,5 +122,14 @@ struct TicketStat: View {
                 .font(AppTheme.Typography.numeric(16))
                 .foregroundColor(isTeal ? AppTheme.primary : .white)
         }
+    }
+}
+
+struct DashedLine: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: 0, y: rect.height / 2))
+        path.addLine(to: CGPoint(x: rect.width, y: rect.height / 2))
+        return path
     }
 }

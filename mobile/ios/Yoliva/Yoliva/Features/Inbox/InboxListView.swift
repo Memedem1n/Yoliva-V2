@@ -76,7 +76,7 @@ struct ConversationRow: View {
                         if conversation.isVerified {
                             Image(systemName: "checkmark.seal.fill")
                                 .font(.caption2)
-                                .foregroundColor(AppTheme.electricTeal)
+                                .foregroundColor(AppTheme.primary)
                         }
                         
                         Spacer()
@@ -90,7 +90,7 @@ struct ConversationRow: View {
                     // Ride Route Hint
                     Text(conversation.tripRoute)
                         .font(.caption2.bold())
-                        .foregroundColor(AppTheme.electricTeal.opacity(0.8))
+                        .foregroundColor(AppTheme.primary.opacity(0.8))
                     
                     // Message Snippet
                     Text(conversation.lastMessage)
@@ -102,9 +102,9 @@ struct ConversationRow: View {
                 // Glowing Teal Unread Badge
                 if conversation.unreadCount > 0 {
                     Circle()
-                        .fill(AppTheme.electricTeal)
+                        .fill(AppTheme.primary)
                         .frame(width: 10, height: 10)
-                        .shadow(color: AppTheme.electricTeal.opacity(0.7), radius: 6)
+                        .shadow(color: AppTheme.primary.opacity(0.7), radius: 6)
                 }
             }
             .padding(.vertical, 16)

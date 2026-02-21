@@ -19,7 +19,7 @@ struct LoginView: View {
             VStack(spacing: 12) {
                 Image(systemName: "car.2.fill") // Logo Placeholder
                     .font(.system(size: 60))
-                    .foregroundColor(AppTheme.electricTeal)
+                    .foregroundColor(AppTheme.primary)
                 
                 Text("Yoliva")
                     .font(AppTheme.Typography.title(32))
@@ -72,7 +72,7 @@ struct LoginView: View {
                     Text("Hesabın yok mu?")
                         .foregroundColor(AppTheme.textSecondary)
                     Text("Hemen Kaydol")
-                        .foregroundColor(AppTheme.electricTeal)
+                        .foregroundColor(AppTheme.primary)
                         .bold()
                 }
                 .font(.subheadline)

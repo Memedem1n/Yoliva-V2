@@ -45,7 +45,7 @@ struct YolivaPrimaryButton: View {
             .frame(height: 60)
             .background(
                 ZStack {
-                    (isPink ? AppTheme.yolivaPink : AppTheme.electricTeal)
+                    (isPink ? AppTheme.accentPink : AppTheme.primary)
                     
                     // Subtle Inner Glow
                     Capsule()
@@ -54,7 +54,7 @@ struct YolivaPrimaryButton: View {
             )
             .clipShape(Capsule())
             .foregroundColor(.black)
-            .shadow(color: (isPink ? AppTheme.yolivaPink : AppTheme.electricTeal).opacity(0.35), radius: 12, x: 0, y: 6)
+            .shadow(color: (isPink ? AppTheme.accentPink : AppTheme.primary).opacity(0.35), radius: 12, x: 0, y: 6)
         }
         .buttonStyle(YolivaButtonStyle())
         .disabled(isLoading)

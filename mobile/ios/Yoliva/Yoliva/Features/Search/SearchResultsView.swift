@@ -85,14 +85,14 @@ struct FilterChip: View {
                 .background(
                     ZStack {
                         if isSelected {
-                            (isLadiesOnly ? AppTheme.yolivaPink : AppTheme.electricTeal)
+                            (isLadiesOnly ? AppTheme.accentPink : AppTheme.primary)
                         } else {
                             Color.white.opacity(0.1)
                         }
                         
                         // Glow effect for selected Ladies Only filter
                         if isSelected && isLadiesOnly {
-                            AppTheme.yolivaPink.blur(radius: 8).opacity(0.3)
+                            AppTheme.accentPink.blur(radius: 8).opacity(0.3)
                         }
                     }
                 )

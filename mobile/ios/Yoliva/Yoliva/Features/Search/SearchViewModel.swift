@@ -1,4 +1,4 @@
-// mobile/ios/Yoliva/Features/Search/SearchViewModel.swift
+// mobile/ios/Yoliva/Yoliva/Features/Search/SearchViewModel.swift
 import SwiftUI
 
 /// SearchViewModel for managing search state, criteria, and filters.
@@ -66,7 +66,7 @@ final class SearchViewModel: ObservableObject {
 }
 
 /// Simple model for trip results during the search phase.
-struct TripResult: Identifiable {
+struct TripResult: Identifiable, Decodable { // Added Decodable
     let id: UUID
     let driverName: String
     let departureTime: Date

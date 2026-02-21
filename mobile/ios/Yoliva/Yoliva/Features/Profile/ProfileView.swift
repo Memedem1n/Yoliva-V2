@@ -50,8 +50,8 @@ struct ProfileView: View {
                             .padding(.horizontal, 40)
                         
                         HStack(spacing: 12) {
-                            VerificationBadge(icon: "shield.fill", label: "Doğrulanmış", color: AppTheme.primary)
-                            VerificationBadge(icon: "calendar", label: "2024'den beri üye", color: .gray)
+                            SimpleVerificationBadge(icon: "shield.fill", label: "Doğrulanmış", color: AppTheme.primary)
+                            SimpleVerificationBadge(icon: "calendar", label: "2024'den beri üye", color: .gray)
                         }
                     }
                     .padding(.top, 20)
@@ -93,6 +93,25 @@ struct ProfileView: View {
                 .padding(.horizontal, AppTheme.horizontalPadding)
             }
         }
+    }
+}
+
+struct SimpleVerificationBadge: View {
+    let icon: String
+    let label: String
+    let color: Color
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: icon)
+            Text(label)
+        }
+        .font(.system(size: 10, weight: .bold))
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(color.opacity(0.1))
+        .foregroundColor(color)
+        .clipShape(Capsule())
     }
 }
 

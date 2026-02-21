@@ -86,7 +86,7 @@ struct SegmentButton: View {
                 .font(.subheadline.bold())
                 .frame(maxWidth: .infinity)
                 .frame(height: 36)
-                .background(isSelected ? AppTheme.electricTeal : Color.clear)
+                .background(isSelected ? AppTheme.primary : Color.clear)
                 .foregroundColor(isSelected ? .black : .white.opacity(0.6))
                 .cornerRadius(12)
         }

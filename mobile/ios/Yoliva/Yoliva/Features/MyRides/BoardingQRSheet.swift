@@ -20,7 +20,7 @@ struct BoardingQRSheet: View {
                         .foregroundColor(.white)
                     Text(ride.pnr)
                         .font(AppTheme.Typography.numeric(18))
-                        .foregroundColor(AppTheme.electricTeal)
+                        .foregroundColor(AppTheme.primary)
                         .bold()
                 }
                 .padding(.top, 40)
@@ -30,7 +30,7 @@ struct BoardingQRSheet: View {
                     RoundedRectangle(cornerRadius: 30)
                         .fill(Color.white)
                         .frame(width: 200, height: 200)
-                        .shadow(color: AppTheme.electricTeal.opacity(0.3), radius: 20)
+                        .shadow(color: AppTheme.primary.opacity(0.3), radius: 20)
                     
                     Image(systemName: "qrcode")
                         .resizable()
@@ -70,7 +70,7 @@ struct BoardingQRSheet: View {
                 if showWalletToast {
                     Text("Bilet Apple Wallet'a eklendi!")
                         .font(.caption.bold())
-                        .foregroundColor(AppTheme.electricTeal)
+                        .foregroundColor(AppTheme.primary)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 16)
                         .glassCard(cornerRadius: 12)

@@ -66,7 +66,7 @@ struct VerificationCenterView: View {
                     // Security Note
                     HStack(spacing: 12) {
                         Image(systemName: "shield.lefthalf.filled")
-                            .foregroundColor(AppTheme.electricTeal)
+                            .foregroundColor(AppTheme.primary)
                         Text("Verileriniz 256-bit şifreleme ile korunmaktadır ve asla üçüncü şahıslarla paylaşılmaz.")
                             .font(.caption)
                             .foregroundColor(.gray)
@@ -104,7 +104,7 @@ struct VerificationRow: View {
             HStack(spacing: 16) {
                 Image(systemName: icon)
                     .font(.title2)
-                    .foregroundColor(AppTheme.electricTeal)
+                    .foregroundColor(AppTheme.primary)
                     .frame(width: 32)
                 
                 VStack(alignment: .leading, spacing: 2) {
@@ -155,13 +155,13 @@ struct PhotoCaptureMockView: View {
                 // Mock Camera Frame
                 ZStack {
                     RoundedRectangle(cornerRadius: 24)
-                        .stroke(AppTheme.electricTeal, style: StrokeStyle(lineWidth: 2, dash: [10]))
+                        .stroke(AppTheme.primary, style: StrokeStyle(lineWidth: 2, dash: [10]))
                         .frame(height: 200)
                     
                     if isUploading {
                         VStack(spacing: 15) {
                             ProgressView()
-                                .tint(AppTheme.electricTeal)
+                                .tint(AppTheme.primary)
                                 .scaleEffect(1.5)
                             Text("Yükleniyor...")
                                 .foregroundColor(.gray)

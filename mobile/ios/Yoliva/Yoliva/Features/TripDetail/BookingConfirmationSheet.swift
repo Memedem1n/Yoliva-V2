@@ -35,7 +35,7 @@ struct BookingConfirmationSheet: View {
                     
                     YolivaPrimaryButton(
                         title: "Bileti Görüntüle",
-                        isPink: accentColor == AppTheme.yolivaPink,
+                        isPink: accentColor == AppTheme.accentPink,
                         action: {
                             dismiss()
                             // Logic to navigate to Ticket detail or My Rides
@@ -63,7 +63,7 @@ struct BookingConfirmationSheet: View {
                     YolivaPrimaryButton(
                         title: "Onayla",
                         isLoading: viewModel.bookingLoading,
-                        isPink: accentColor == AppTheme.yolivaPink,
+                        isPink: accentColor == AppTheme.accentPink,
                         action: {
                             Task {
                                 await viewModel.confirmBooking()
