@@ -5,7 +5,7 @@ targets:
   Yoliva:
     type: application
     platform: iOS
-    deploymentTarget: "16.4"
+    deploymentTarget: "17.0"
     sources: [Yoliva]
     settings:
       base:
