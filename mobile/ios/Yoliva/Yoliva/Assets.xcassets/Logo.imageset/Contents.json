@@ -1,8 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "Logo.jpg",
       "idiom" : "universal",
+      "filename" : "Logo.jpg",
       "scale" : "1x"
     },
     {
