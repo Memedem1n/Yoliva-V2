@@ -104,3 +104,28 @@ struct TabItemButton: View {
         }
     }
 }
+
+/// Enum defining the main navigation tabs.
+enum YolivaTab: Int, CaseIterable {
+    case search, publish, rides, inbox, profile
+    
+    var icon: String {
+        switch self {
+        case .search: return "magnifyingglass"
+        case .publish: return "plus.circle"
+        case .rides: return "car.2"
+        case .inbox: return "bubble.left.and.bubble.right"
+        case .profile: return "person.crop.circle"
+        }
+    }
+    
+    var label: String {
+        switch self {
+        case .search: return "Ara"
+        case .publish: return "Yayınla"
+        case .rides: return "Yolculukların"
+        case .inbox: return "Gelen Kutusu"
+        case .profile: return "Profil"
+        }
+    }
+}
