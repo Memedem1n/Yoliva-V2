@@ -1,47 +1,42 @@
-// mobile/ios/Yoliva/Yoliva/YolivaApp.swift
+// mobile/ios/Yoliva/Yoliva/Features/Main/MainContainerView.swift
 import SwiftUI
 
-/// Main Entry Point for the Yoliva application.
-@main
-struct YolivaApp: App {
-    @StateObject private var sessionManager = SessionManager()
-    @StateObject private var router = AppRouter()
-    
-    var body: some Scene {
-        WindowGroup {
-            RootSwitcherView()
-                .environmentObject(sessionManager)
-                .environmentObject(router)
-                .preferredColorScheme(.dark)
-        }
-    }
-}
-
-/// A high-level switcher that manages the root view based on AppState.
-/// This prevents infinite routing loops by ensuring only one root exists at a time.
-struct RootSwitcherView: View {
+/// The primary shell of the application after login, managing tab navigation and content.
+struct MainContainerView: View {
     @EnvironmentObject var session: SessionManager
     @EnvironmentObject var router: AppRouter
+    @State private var selectedTab: YolivaTab = .search
     
     var body: some View {
-        Group {
-            switch session.appState {
-            case .splash:
-                SplashView()
-            case .unauthenticated:
-                NavigationStack(path: $router.path) {
-                    LoginView(sessionManager: session)
-                        .navigationDestination(for: AppRoute.self) { route in
-                            destinationView(for: route)
-                        }
+        NavigationStack(path: $router.path) {
+            ZStack(alignment: .bottom) {
+                // Content Layer
+                Group {
+                    switch selectedTab {
+                    case .search:
+                        SearchRouteView()
+                    case .publish:
+                        PublishTripView()
+                    case .rides:
+                        MyRidesView()
+                    case .inbox:
+                        InboxListView()
+                    case .profile:
+                        ProfileView()
+                    }
                 }
-            case .authenticated:
-                MainContainerView()
-                    .environmentObject(session)
-                    .environmentObject(router)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .transition(.opacity.combined(with: .scale(scale: 0.98)))
+                .animation(.easeOut(duration: 0.2), value: selectedTab)
+                .navigationDestination(for: AppRoute.self) { route in
+                    destinationView(for: route)
+                }
+                
+                // Premium Tab Bar (Floating)
+                PremiumTabView(selection: $selectedTab)
             }
+            .edgesIgnoringSafeArea(.bottom)
         }
-        .animation(.spring(), value: session.appState)
     }
     
     @ViewBuilder
