@@ -1,7 +1,7 @@
 // mobile/ios/Yoliva/Yoliva/Core/DesignSystem/Components/PremiumTabView.swift
 import SwiftUI
 
-/// Ultra-Premium, Glassmorphic Tab Bar with Ripple and Burst effects.
+/// Ultra-Premium, Floating Capsule Tab Bar matching the reference exactly.
 struct PremiumTabView: View {
     @Binding var selection: YolivaTab
     @Namespace private var animation
@@ -20,24 +20,25 @@ struct PremiumTabView: View {
                 }
             }
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 6)
         .padding(.vertical, 6)
         .background(
             ZStack {
-                // 1. Precise Glass Background matching screenshot
-                RoundedRectangle(cornerRadius: 35)
-                    .fill(Color(red: 0.08, green: 0.08, blue: 0.12).opacity(0.8))
-                    .background(.ultraThinMaterial)
+                // 1. Solid High-Contrast Background (Matches reference)
+                // Using a very dark gray/almost black to stand out against the pure black app background
+                Capsule()
+                    .fill(Color(red: 0.11, green: 0.11, blue: 0.13)) 
+                    .shadow(color: Color.black.opacity(0.5), radius: 20, y: 10) // Deep shadow for lift
                 
-                // 2. Subtle Rim Light
-                RoundedRectangle(cornerRadius: 35)
-                    .stroke(Color.white.opacity(0.12), lineWidth: 0.5)
+                // 2. Subtle Border for Definition
+                Capsule()
+                    .stroke(Color.white.opacity(0.1), lineWidth: 1)
             }
         )
-        // 3. Responsive Geometry: Wider and shorter as requested
-        .frame(height: 60) 
-        .padding(.horizontal, 12) // Increases overall width by reducing side padding
-        .padding(.bottom, 25) // Floating above bottom
+        // 3. Layout: Floating Capsule Constraints
+        .frame(height: 64) 
+        .padding(.horizontal, 24) // Margins from screen edges
+        .padding(.bottom, 10) // Float above home indicator
     }
 }
 
@@ -64,26 +65,31 @@ struct TabItemButton: View {
                         .scaleEffect(rippleScale)
                         .opacity(rippleOpacity)
                     
-                    // Icon with Burst/Spring
+                    // Icon
                     Image(systemName: tab.icon)
-                        .font(.system(size: 18, weight: isSelected ? .bold : .medium))
-                        .foregroundColor(isSelected ? AppTheme.primary : .white.opacity(0.6))
+                        .font(.system(size: 20, weight: isSelected ? .semibold : .medium)) // Slightly larger icons
+                        .foregroundColor(isSelected ? AppTheme.primary : .gray)
                         .symbolEffect(.bounce, value: isSelected)
                 }
                 
-                Text(tab.label)
-                    .font(.system(size: 10, weight: isSelected ? .bold : .medium))
-                    .foregroundColor(isSelected ? AppTheme.primary : .white.opacity(0.6))
+                // Label (Only show if needed or simplify like the ref image)
+                if isSelected {
+                    Text(tab.label)
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(AppTheme.primary)
+                        .transition(.scale.combined(with: .opacity))
+                        .lineLimit(1)
+                }
             }
             .frame(maxWidth: .infinity)
             .background(
                 ZStack {
                     if isSelected {
-                        // Glassy Bubble Highlight (Matched Geometry)
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.white.opacity(0.08))
+                        // Subtle Active Indicator (Behind icon)
+                        Capsule()
+                            .fill(AppTheme.primary.opacity(0.1))
+                            .frame(height: 40)
                             .matchedGeometryEffect(id: "tab_bubble", in: animation)
-                            .shadow(color: AppTheme.primary.opacity(0.2), radius: 10)
                     }
                 }
             )
@@ -93,11 +99,8 @@ struct TabItemButton: View {
     
     private func triggerEffects() {
         AppTheme.haptic(.medium)
-        
-        // Reset and fire ripple
         rippleScale = 0.5
         rippleOpacity = 0.6
-        
         withAnimation(.easeOut(duration: 0.5)) {
             rippleScale = 2.0
             rippleOpacity = 0.0
@@ -123,8 +126,8 @@ enum YolivaTab: Int, CaseIterable {
         switch self {
         case .search: return "Ara"
         case .publish: return "Yayınla"
-        case .rides: return "Yolculukların"
-        case .inbox: return "Gelen Kutusu"
+        case .rides: return "Yolculuk"
+        case .inbox: return "Mesajlar"
         case .profile: return "Profil"
         }
     }
