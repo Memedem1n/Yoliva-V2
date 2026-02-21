@@ -1,0 +1,46 @@
+name: Yoliva iOS Build (Sideloadly)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    name: Build Unsigned iOS App
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Build Unsigned App
+        working-directory: ./mobile/ios/Yoliva
+        run: |
+          xcodebuild clean build 
+            -project Yoliva.xcodeproj 
+            -scheme Yoliva 
+            -configuration Release 
+            -sdk iphoneos 
+            CODE_SIGN_IDENTITY="" 
+            CODE_SIGNING_REQUIRED=NO 
+            CODE_SIGNING_ALLOWED=NO 
+            BUILD_DIR="${{ github.workspace }}/build"
+
+      - name: Package as .ipa
+        run: |
+          mkdir -p Payload
+          mv ${{ github.workspace }}/build/Release-iphoneos/Yoliva.app Payload/
+          zip -qr Yoliva.ipa Payload
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Yoliva-iOS-App
+          path: Yoliva.ipa
+          retention-days: 7
