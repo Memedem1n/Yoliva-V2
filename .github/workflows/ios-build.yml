@@ -26,6 +26,11 @@ jobs:
         working-directory: ./mobile/ios/Yoliva
         run: xcodegen generate
 
+      - name: Convert Logo to PNG
+        run: |
+          sips -s format png ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/AppIcon.appiconset/Logo.jpg --out ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/AppIcon.appiconset/AppIcon.png
+          sips -s format png ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/Logo.imageset/Logo.jpg --out ./mobile/ios/Yoliva/Yoliva/Assets.xcassets/Logo.imageset/Logo.png
+
       - name: Build Unsigned App
         working-directory: ./mobile/ios/Yoliva
         run: |
