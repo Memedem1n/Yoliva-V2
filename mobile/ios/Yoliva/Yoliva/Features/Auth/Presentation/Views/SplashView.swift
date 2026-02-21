@@ -48,16 +48,10 @@ struct SplashView: View {
                 startAnimation = true
             }
             
-            // Automatic Navigation logic after splash duration (e.g., 2.5 seconds)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            // Notify SessionManager to transition state after splash duration
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 withAnimation(.spring()) {
-                    if session.isAuthenticated {
-                        router.navigate(to: .dashboard)
-                    } else if session.isFirstTimeUser {
-                        router.navigate(to: .onboarding)
-                    } else {
-                        router.navigate(to: .login)
-                    }
+                    session.finishSplash()
                 }
             }
         }

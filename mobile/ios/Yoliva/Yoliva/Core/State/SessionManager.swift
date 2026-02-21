@@ -4,6 +4,13 @@ import SwiftUI
 /// Main Authentication and User Session Manager for Yoliva.
 @MainActor
 final class SessionManager: ObservableObject {
+    enum AppState {
+        case splash
+        case unauthenticated
+        case authenticated
+    }
+    
+    @Published var appState: AppState = .splash
     @Published var isAuthenticated: Bool = false
     @Published var isFirstTimeUser: Bool = true
     
@@ -23,17 +30,28 @@ final class SessionManager: ObservableObject {
         self.isFirstTimeUser = !UserDefaults.standard.bool(forKey: "has_completed_onboarding")
     }
     
+    /// Transitions from Splash to the appropriate state.
+    func finishSplash() {
+        if isAuthenticated {
+            appState = .authenticated
+        } else {
+            appState = .unauthenticated
+        }
+    }
+    
     /// Log in the user by storing their session token and updating the state.
     /// - Parameter token: The JWT token received from the backend.
     func login(token: String) {
         KeychainManager.shared.save(token, for: tokenKey)
         self.isAuthenticated = true
+        self.appState = .authenticated
     }
     
     /// Log out the user by clearing the session token and resetting the state.
     func logout() {
         KeychainManager.shared.delete(for: tokenKey)
         self.isAuthenticated = false
+        self.appState = .unauthenticated
     }
     
     /// Mark onboarding as completed.
