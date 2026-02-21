@@ -19,17 +19,24 @@ jobs:
         with:
           xcode-version: latest-stable
 
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode Project
+        working-directory: ./mobile/ios/Yoliva
+        run: xcodegen generate
+
       - name: Build Unsigned App
         working-directory: ./mobile/ios/Yoliva
         run: |
-          xcodebuild clean build 
-            -project Yoliva.xcodeproj 
-            -scheme Yoliva 
-            -configuration Release 
-            -sdk iphoneos 
-            CODE_SIGN_IDENTITY="" 
-            CODE_SIGNING_REQUIRED=NO 
-            CODE_SIGNING_ALLOWED=NO 
+          xcodebuild clean build \
+            -project Yoliva.xcodeproj \
+            -scheme Yoliva \
+            -configuration Release \
+            -sdk iphoneos \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
             BUILD_DIR="${{ github.workspace }}/build"
 
       - name: Package as .ipa
