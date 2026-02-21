@@ -1,7 +1,7 @@
-// mobile/ios/Yoliva/Features/Search/Components/TripCardView.swift
+// mobile/ios/Yoliva/Yoliva/Features/Search/Components/TripCardView.swift
 import SwiftUI
 
-/// Premium Result Card for Trip Search Results.
+/// Redesigned Responsive Trip Card with Depth and Symbol Effects.
 struct TripCardView: View {
     let trip: TripResult
     let action: () -> Void
@@ -11,70 +11,59 @@ struct TripCardView: View {
             AppTheme.haptic(.light)
             action()
         }) {
-            VStack(alignment: .leading, spacing: 18) {
-                // Time and Price Header
-                HStack {
-                    HStack(spacing: 8) {
-                        Text(trip.departureTime, style: .time)
-                            .font(AppTheme.Typography.numeric(20))
-                            .foregroundColor(trip.isLadiesOnly ? AppTheme.yolivaPink : AppTheme.electricTeal)
+            VStack(alignment: .leading, spacing: 16) {
+                // 1. Time & Price: High contrast
+                HStack(alignment: .firstTextBaseline) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack(spacing: 8) {
+                            Text(trip.departureTime, style: .time)
+                                .font(AppTheme.Typography.numeric(22))
+                                .foregroundColor(.white)
+                            
+                            Image(systemName: "chevron.right")
+                                .font(.caption2.bold())
+                                .foregroundColor(AppTheme.accent.opacity(0.5))
+                            
+                            Text(trip.departureTime.addingTimeInterval(14400), style: .time)
+                                .font(AppTheme.Typography.numeric(22))
+                                .foregroundColor(.white.opacity(0.6))
+                        }
                         
-                        Text("➔")
-                            .font(.system(size: 16, weight: .bold))
-                            .foregroundColor(.white.opacity(0.3))
-                        
-                        Text(trip.departureTime.addingTimeInterval(14400), style: .time)
-                            .font(AppTheme.Typography.numeric(20))
-                            .foregroundColor(.white.opacity(0.6))
+                        Text("\(trip.fromCity) ➔ \(trip.toCity)")
+                            .font(.caption.bold())
+                            .foregroundColor(AppTheme.accent)
                     }
                     
                     Spacer()
                     
                     Text("₺\(Int(trip.price))")
-                        .font(AppTheme.Typography.numeric(24))
-                        .foregroundColor(.white)
-                }
-                
-                // Vertical Timeline logic for Location
-                HStack(spacing: 12) {
-                    VStack(spacing: 4) {
-                        Circle()
-                            .fill(trip.isLadiesOnly ? AppTheme.yolivaPink : AppTheme.electricTeal)
-                            .frame(width: 8, height: 8)
-                        Rectangle()
-                            .fill(Color.white.opacity(0.1))
-                            .frame(width: 2, height: 20)
-                        Circle()
-                            .stroke(Color.white.opacity(0.3), lineWidth: 2)
-                            .frame(width: 8, height: 8)
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 14) {
-                        Text(trip.fromCity)
-                            .font(.headline)
-                            .foregroundColor(.white)
-                        Text(trip.toCity)
-                            .font(.subheadline)
-                            .foregroundColor(.white.opacity(0.6))
-                    }
+                        .font(AppTheme.Typography.numeric(26))
+                        .foregroundColor(AppTheme.accent)
+                        .shadow(color: AppTheme.accent.opacity(0.3), radius: 8)
                 }
                 
                 Divider().background(Color.white.opacity(0.1))
                 
-                // Driver and Badges Footer
+                // 2. Driver & Badges: Modern layout
                 HStack {
-                    HStack(spacing: 10) {
-                        // Driver Avatar with Glassmorphic Circle
-                        Circle()
-                            .fill(Color.white.opacity(0.1))
-                            .frame(width: 32, height: 32)
-                            .overlay(Text(String(trip.driverName.prefix(1))).font(.caption.bold()))
-                            .glassCard(cornerRadius: 16)
+                    HStack(spacing: 12) {
+                        // Avatar with depth
+                        ZStack {
+                            Circle()
+                                .fill(AppTheme.surface)
+                                .frame(width: 40, height: 40)
+                            
+                            Text(String(trip.driverName.prefix(1)))
+                                .font(.subheadline.bold())
+                                .foregroundColor(.white)
+                        }
+                        .overlay(Circle().stroke(Color.white.opacity(0.1), lineWidth: 1))
                         
                         VStack(alignment: .leading, spacing: 2) {
                             Text(trip.driverName)
-                                .font(.caption.bold())
+                                .font(.subheadline.bold())
                                 .foregroundColor(.white)
+                            
                             HStack(spacing: 4) {
                                 Image(systemName: "star.fill")
                                     .font(.system(size: 10))
@@ -88,35 +77,28 @@ struct TripCardView: View {
                     
                     Spacer()
                     
-                    // Feature Badges
-                    HStack(spacing: 6) {
+                    // Animated Symbol Badges (iOS 17+)
+                    HStack(spacing: 10) {
                         if trip.isLadiesOnly {
-                            FeatureBadge(icon: "figure.and.child.holdinghands", color: AppTheme.yolivaPink)
+                            Image(systemName: "figure.and.child.holdinghands")
+                                .symbolEffect(.bounce, options: .repeat(2))
+                                .foregroundColor(AppTheme.yolivaPink)
+                                .padding(8)
+                                .background(AppTheme.yolivaPink.opacity(0.1))
+                                .clipShape(Circle())
                         }
-                        FeatureBadge(icon: "bolt.fill", color: AppTheme.electricTeal)
+                        
+                        Image(systemName: "shield.checkered")
+                            .foregroundColor(AppTheme.primary)
+                            .padding(8)
+                            .background(AppTheme.primary.opacity(0.1))
+                            .clipShape(Circle())
                     }
                 }
             }
             .padding(20)
-            .glassCard(cornerRadius: 24)
+            .glassCard(cornerRadius: 28, addGlow: trip.isLadiesOnly)
         }
         .buttonStyle(PlainButtonStyle())
-    }
-}
-
-// MARK: - Subcomponents
-
-struct FeatureBadge: View {
-    let icon: String
-    let color: Color
-    
-    var body: some View {
-        Image(systemName: icon)
-            .font(.system(size: 12, weight: .bold))
-            .padding(8)
-            .background(color.opacity(0.1))
-            .foregroundColor(color)
-            .clipShape(Circle())
-            .overlay(Circle().stroke(color.opacity(0.2), lineWidth: 1))
     }
 }
