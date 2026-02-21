@@ -30,6 +30,8 @@ enum AppRoute: Hashable {
     case login
     case otp(email: String)
     case dashboard
+    case search
+    case myRides
     case rideDetails(id: String)
     case publishWizard
     case profile

@@ -1,4 +1,4 @@
-// mobile/ios/Yoliva/YolivaApp.swift
+// mobile/ios/Yoliva/Yoliva/YolivaApp.swift
 import SwiftUI
 
 /// Main Entry Point for the Yoliva application.
@@ -22,7 +22,6 @@ struct YolivaApp: App {
 }
 
 /// A simplified AppRootView that manages the top-level switching between Auth and Dashboard.
-/// In a real scenario, this would be defined in Core/Navigation/AppRootView.swift.
 struct AppRootView: View {
     @EnvironmentObject var session: SessionManager
     @EnvironmentObject var router: AppRouter
@@ -30,36 +29,48 @@ struct AppRootView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             ZStack {
-                Color.black.ignoresSafeArea()
+                AppTheme.background.ignoresSafeArea()
                 
                 // Navigation Logic
                 if session.isAuthenticated {
                     // Main application dashboard after login
-                    Text("Ana Ekran (Dashboard)")
-                        .foregroundColor(.white)
+                    HomeView()
                 } else if session.isFirstTimeUser {
                     // Initial welcome/onboarding screens
-                    Text("Hoş Geldiniz (Onboarding)")
-                        .foregroundColor(.white)
+                    SplashView()
                 } else {
                     // Standard login flow
-                    Text("Giriş Yap (Login)")
-                        .foregroundColor(.white)
+                    LoginView(sessionManager: session)
                 }
             }
             .navigationDestination(for: AppRoute.self) { route in
                 // Global routing logic based on AppRoute enum
                 switch route {
                 case .login:
-                    Text("Login View Placeholder")
+                    LoginView(sessionManager: session)
                 case .onboarding:
-                    Text("Onboarding View Placeholder")
+                    SplashView() // Or OnboardingView if implemented
                 case .dashboard:
-                    Text("Dashboard View Placeholder")
+                    HomeView()
+                case .search:
+                    SearchRouteView()
+                case .myRides:
+                    MyRidesView()
                 case .rideDetails(let id):
-                    Text("Ride Detail #\(id)")
-                default:
-                    Text("Rota: \(String(describing: route))")
+                    // In a real app, we'd fetch the trip by ID
+                    TripDetailView(trip: TripResult(id: UUID(uuidString: id) ?? UUID(), driverName: "Zeynep Y.", departureTime: Date(), fromCity: "İstanbul", toCity: "Ankara", price: 350, isLadiesOnly: false, rating: 4.9, carModel: "Tesla Model 3"))
+                case .publishWizard:
+                    PublishTripView()
+                case .profile:
+                    ProfileView()
+                case .chat(let rideId):
+                    // Mocking a conversation for the view based on the ID
+                    ChatDetailView(conversation: Conversation(id: UUID(uuidString: rideId) ?? UUID(), userName: "Zeynep Y.", tripRoute: "İstanbul ➔ Ankara", lastMessage: "Tamamdır, Boğa heykelinin önündeyim.", unreadCount: 0, isVerified: true, timestamp: Date()))
+                case .trustCenter:
+                    // Navigate to Verification Center through Profile or directly
+                    VerificationCenterView(viewModel: ProfileViewModel())
+                case .otp(let email):
+                    Text("OTP for \(email)") // OTPView placeholder
                 }
             }
         }

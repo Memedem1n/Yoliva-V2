@@ -57,7 +57,7 @@ final class PublishViewModel: ObservableObject {
         withAnimation(.spring()) {
             isPublished = true
         }
-        AppTheme.haptic(.success)
+        AppTheme.notificationHaptic(.success)
     }
     
     /// Resets the wizard for a new trip.

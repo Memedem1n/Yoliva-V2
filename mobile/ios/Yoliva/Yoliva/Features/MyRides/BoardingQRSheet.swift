@@ -42,7 +42,7 @@ struct BoardingQRSheet: View {
                 
                 // Add to Apple Wallet Mock Button
                 Button(action: {
-                    AppTheme.haptic(.success)
+                    AppTheme.notificationHaptic(.success)
                     withAnimation(.spring()) {
                         showWalletToast = true
                     }

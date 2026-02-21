@@ -49,7 +49,7 @@ struct FaceIDAuthModifier: ViewModifier {
                     
                     // Success logic
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        AppTheme.haptic(.success)
+                        AppTheme.notificationHaptic(.success)
                         withAnimation {
                             isScanning = false
                             isSuccess = true

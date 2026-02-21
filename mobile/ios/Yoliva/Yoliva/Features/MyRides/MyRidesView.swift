@@ -110,6 +110,3 @@ struct EmptyRidesState: View {
         .padding(.top, 60)
     }
 }
-
-// Extension to make UserRide identifiable for sheet item:
-extension UserRide: Identifiable { }

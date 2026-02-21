@@ -59,7 +59,7 @@ final class ProfileViewModel: ObservableObject {
             }
         }
         
-        AppTheme.haptic(.success)
+        AppTheme.notificationHaptic(.success)
         isTakingPhoto = false
     }
 }

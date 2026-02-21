@@ -7,6 +7,7 @@ struct AppTheme {
     static let electricTeal = Color(red: 0.0, green: 0.898, blue: 0.749) // #00E5BF
     static let yolivaPink = Color(red: 0.910, green: 0.263, blue: 0.576) // #E84393
     static let pureBlack = Color.black
+    static let background = Color.black // Added missing background property
     static let cardBackground = Color(white: 0.08)
     
     // MARK: - Text Colors
@@ -32,10 +33,17 @@ struct AppTheme {
     }
     
     // MARK: - Haptic Motor
-    /// Central haptic feedback engine for all user interactions.
+    /// Central haptic feedback engine for impact interactions.
     static func haptic(_ style: UIImpactFeedbackGenerator.FeedbackStyle = .medium) {
         let generator = UIImpactFeedbackGenerator(style: style)
         generator.prepare()
         generator.impactOccurred()
+    }
+    
+    /// Central haptic feedback engine for notification-based interactions (success, error, warning).
+    static func notificationHaptic(_ type: UINotificationFeedbackGenerator.FeedbackType) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        generator.notificationOccurred(type)
     }
 }

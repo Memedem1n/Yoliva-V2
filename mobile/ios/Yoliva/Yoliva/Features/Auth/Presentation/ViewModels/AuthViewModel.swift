@@ -32,7 +32,7 @@ final class AuthViewModel: ObservableObject {
     func login() async {
         guard !loginEmail.isEmpty && !loginPassword.isEmpty else {
             errorMessage = "Lütfen tüm alanları doldurun."
-            AppTheme.haptic(.error)
+            AppTheme.notificationHaptic(.error)
             return
         }
         
@@ -45,7 +45,7 @@ final class AuthViewModel: ObservableObject {
         // On success: Store token and update session state
         let mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
         sessionManager.login(token: mockToken)
-        AppTheme.haptic(.success)
+        AppTheme.notificationHaptic(.success)
         
         isLoading = false
     }
@@ -54,7 +54,7 @@ final class AuthViewModel: ObservableObject {
     func register() async {
         guard regTermsAccepted else {
             errorMessage = "Lütfen kullanım koşullarını kabul edin."
-            AppTheme.haptic(.error)
+            AppTheme.notificationHaptic(.error)
             return
         }
         
@@ -66,7 +66,7 @@ final class AuthViewModel: ObservableObject {
         
         // Success: Navigate to OTP verification
         navigateToOTP = true
-        AppTheme.haptic(.success)
+        AppTheme.notificationHaptic(.success)
         
         isLoading = false
     }

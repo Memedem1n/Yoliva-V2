@@ -36,6 +36,6 @@ final class TripDetailViewModel: ObservableObject {
         self.pnrCode = "YLV-\(Int.random(in: 1000...9999))"
         self.isBookingSuccess = true
         self.bookingLoading = false
-        AppTheme.haptic(.success)
+        AppTheme.notificationHaptic(.success)
     }
 }

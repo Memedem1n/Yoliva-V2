@@ -37,7 +37,7 @@ final class SearchViewModel: ObservableObject {
     /// Executes the search based on current criteria.
     func executeSearch() async {
         guard !departureCity.isEmpty && !arrivalCity.isEmpty else {
-            AppTheme.haptic(.error)
+            AppTheme.notificationHaptic(.error)
             return
         }
         
